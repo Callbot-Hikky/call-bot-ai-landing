@@ -1,0 +1,44 @@
+---
+import SectionBlinds from "@/components/landing/section-blinds.astro";
+import TextWhip from "@/components/landing/text-whip.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const metrics = [
+  { value: t("metrics.m1"), label: t("metrics.m1Label") },
+  { value: t("metrics.m2"), label: t("metrics.m2Label") },
+  { value: t("metrics.m3"), label: t("metrics.m3Label") },
+  { value: t("metrics.m4"), label: t("metrics.m4Label") }
+];
+---
+
+<section class="relative overflow-hidden py-20">
+  <SectionBlinds fill="oklch(1 0 0)" />
+  <div
+    class="hk-glow pointer-events-none absolute inset-x-0 top-1/2 -z-10 mx-auto h-64 max-w-4xl -translate-y-1/2 opacity-30"
+  >
+  </div>
+  <div class="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-5 md:grid-cols-4">
+    {
+      metrics.map((metric, i) => (
+        <div class="text-center">
+          <TextWhip
+            as="p"
+            text={metric.value}
+            class="hk-whip-gradient hk-display text-[clamp(2.6rem,6vw,4rem)] font-semibold"
+            delay={i * 0.08}
+          />
+          <TextWhip
+            as="p"
+            text={metric.label}
+            class="mt-1 text-sm text-muted-foreground"
+            speed="fast"
+            delay={i * 0.08}
+          />
+        </div>
+      ))
+    }
+  </div>
+</section>

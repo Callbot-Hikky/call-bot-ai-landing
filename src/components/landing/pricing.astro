@@ -1,0 +1,99 @@
+---
+import Icon from "@/components/landing/icon.astro";
+import SectionBlinds from "@/components/landing/section-blinds.astro";
+import TextWhip from "@/components/landing/text-whip.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getAppUrl } from "@/lib/app-url";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Souscription : on envoie vers la page /offre de l'app. Le garde d'auth y
+// renvoie vers /login?redirectTo=/offre si le visiteur n'a pas encore de compte.
+const APP_URL = getAppUrl();
+
+const plan = {
+  name: t("pricing.p1Name"),
+  price: t("pricing.p1Price"),
+  cadence: t("pricing.p1Cadence"),
+  tagline: t("pricing.p1Tagline"),
+  cta: t("pricing.p1Cta"),
+  ctaSubscribe: t("pricing.p1CtaSubscribe"),
+  perks: [
+    t("pricing.p1Perk1"),
+    t("pricing.p1Perk2"),
+    t("pricing.p1Perk3"),
+    t("pricing.p1Perk4"),
+    t("pricing.p1Perk5")
+  ]
+};
+---
+
+<section id="tarifs" class="relative mx-auto max-w-6xl px-5 py-24 md:py-32">
+  <SectionBlinds fill="oklch(1 0 0)" />
+  <div class="mx-auto max-w-2xl text-center">
+    <TextWhip
+      as="h2"
+      text={t("pricing.title")}
+      class="hk-display text-[clamp(2rem,4.6vw,3.4rem)] text-foreground"
+    />
+    <TextWhip
+      as="p"
+      text={t("pricing.subtitle")}
+      class="mt-4 text-muted-foreground"
+      speed="fast"
+    />
+  </div>
+
+  <div class="mx-auto mt-14 max-w-md">
+    <div class="hk-reveal">
+      <div class="relative h-full overflow-hidden rounded-3xl border border-coral/40 bg-card/50 p-8">
+        <div class="hk-glow pointer-events-none absolute -right-10 -top-10 size-56 opacity-50" />
+
+        <TextWhip
+          as="p"
+          text={plan.name}
+          class="hk-display relative text-2xl text-foreground"
+        />
+        <TextWhip
+          as="p"
+          text={plan.tagline}
+          class="relative mt-1 text-sm text-muted-foreground"
+          speed="fast"
+        />
+
+        <div class="relative mt-6 flex items-end gap-1">
+          <span class="hk-display text-5xl text-foreground">{plan.price}</span>
+          <span class="mb-1.5 text-muted-foreground">{plan.cadence}</span>
+        </div>
+
+        <ul class="relative mt-7 space-y-3">
+          {plan.perks.map((perk) => (
+            <li class="flex items-start gap-3 text-[0.95rem] text-foreground/90">
+              <span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-secondary text-foreground">
+                <Icon name="check" size={14} />
+              </span>
+              {perk}
+            </li>
+          ))}
+        </ul>
+
+        <a href={`${APP_URL}/offre`} class="hk-cta relative mt-8 w-full">
+          {plan.ctaSubscribe}
+          <Icon name="arrow-right" size={16} />
+        </a>
+
+        <a href="#demo" class="hk-cta-ghost relative mt-3 w-full">
+          {plan.cta}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <TextWhip
+    as="p"
+    text={t("pricing.note")}
+    class="mt-8 text-center text-sm text-muted-foreground"
+    speed="fast"
+  />
+</section>

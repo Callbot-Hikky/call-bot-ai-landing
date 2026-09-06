@@ -1,0 +1,57 @@
+---
+import Icon from "@/components/landing/icon.astro";
+import SectionBlinds from "@/components/landing/section-blinds.astro";
+import TextWhip from "@/components/landing/text-whip.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pains = [
+  { icon: "phone-missed", stat: t("problem.stat1"), body: t("problem.stat1Body") },
+  { icon: "phone-off", stat: t("problem.stat2"), body: t("problem.stat2Body") },
+  { icon: "clock", stat: t("problem.stat3"), body: t("problem.stat3Body") }
+] as const;
+---
+
+<section class="relative mx-auto max-w-6xl px-5 py-24 md:py-32">
+  <SectionBlinds fill="oklch(1 0 0)" />
+  <div>
+    <h2
+      class="hk-display max-w-3xl text-[clamp(2rem,4.6vw,3.4rem)] text-foreground"
+    >
+      <TextWhip as="span" text={t("problem.title")} />{" "}
+      <TextWhip
+        as="span"
+        text={t("problem.titleAccent")}
+        class="hk-whip-gradient"
+        delay={0.18}
+      />
+    </h2>
+  </div>
+
+  <div class="mt-14 grid gap-5 md:grid-cols-3">
+    {
+      pains.map((pain, i) => (
+        <div class="hk-reveal" style={`--hk-reveal-delay:${i * 100}ms`}>
+          <div class="h-full rounded-3xl border border-border bg-card/40 p-7">
+            <span class="grid size-11 place-items-center rounded-2xl bg-coral/12 text-coral">
+              <Icon name={pain.icon} size={20} />
+            </span>
+            <TextWhip
+              as="p"
+              text={pain.stat}
+              class="hk-display mt-6 text-4xl text-foreground"
+            />
+            <TextWhip
+              as="p"
+              text={pain.body}
+              class="mt-2 text-muted-foreground"
+              speed="fast"
+            />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

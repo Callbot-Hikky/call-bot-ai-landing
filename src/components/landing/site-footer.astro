@@ -1,0 +1,84 @@
+---
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const columns = [
+  {
+    title: t("footer.colProduct"),
+    links: [
+      { label: t("footer.linkHow"), href: "#fonctionnement" },
+      { label: t("footer.linkFeatures"), href: "#fonctionnalites" },
+      { label: t("footer.linkPricing"), href: "#tarifs" },
+      { label: t("footer.linkDemo"), href: "#demo" }
+    ]
+  },
+  {
+    title: t("footer.colResources"),
+    links: [
+      { label: t("footer.linkGuide"), href: "#top" },
+      { label: t("footer.linkIntegrations"), href: "#top" },
+      { label: t("footer.linkStatus"), href: "#top" },
+      { label: t("footer.linkSupport"), href: "#top" }
+    ]
+  },
+  {
+    title: t("footer.colLegal"),
+    links: [
+      { label: t("footer.linkLegal"), href: "#top" },
+      { label: t("footer.linkPrivacy"), href: "#top" },
+      { label: t("footer.linkTerms"), href: "#top" },
+      { label: t("footer.linkCookies"), href: "#top" }
+    ]
+  }
+];
+---
+
+<footer class="border-t border-border bg-muted/60">
+  <div class="mx-auto max-w-6xl px-5 py-16">
+    <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div>
+        <span class="hk-display text-2xl font-semibold tracking-tight text-foreground">
+          hikyy
+        </span>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+          {t("footer.tagline")}
+        </p>
+      </div>
+
+      {
+        columns.map((col) => (
+          <div>
+            <p class="text-sm font-semibold text-foreground">{col.title}</p>
+            <ul class="mt-4 space-y-2.5">
+              {col.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground sm:flex-row"
+    >
+      <p>{t("footer.rights")}</p>
+      <p class="flex items-center gap-2">
+        {t("footer.madeWith")}
+        <span
+          class="size-1.5 rounded-full"
+          style="background-image:linear-gradient(90deg,var(--color-amber),var(--color-coral))"
+        ></span>
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,61 @@
+---
+import SectionBlinds from "@/components/landing/section-blinds.astro";
+import TextWhip from "@/components/landing/text-whip.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const steps = [
+  { index: "01", title: t("how.s1Title"), body: t("how.s1Body") },
+  { index: "02", title: t("how.s2Title"), body: t("how.s2Body") },
+  { index: "03", title: t("how.s3Title"), body: t("how.s3Body") }
+];
+---
+
+<section
+  id="fonctionnement"
+  class="relative border-y border-border bg-muted/60 py-24 md:py-32"
+>
+  <SectionBlinds fill="oklch(1 0 0)" />
+  <div class="mx-auto max-w-6xl px-5">
+    <div class="max-w-2xl">
+      <TextWhip
+        as="h2"
+        text={t("how.title")}
+        class="hk-display text-[clamp(2rem,4.6vw,3.4rem)] text-foreground"
+      />
+    </div>
+
+    <div class="relative mt-16 grid gap-10 md:grid-cols-3">
+      <div
+        class="absolute inset-x-0 top-8 hidden h-px md:block"
+        style="background:linear-gradient(90deg,transparent,var(--border) 15%,var(--border) 85%,transparent)"
+      >
+      </div>
+
+      {
+        steps.map((step, i) => (
+          <div class="hk-reveal relative" style={`--hk-reveal-delay:${i * 120}ms`}>
+            <div class="flex size-16 items-center justify-center rounded-2xl border border-border bg-background">
+              <span class="hk-gradient-text hk-display text-3xl font-semibold">
+                {step.index}
+              </span>
+            </div>
+            <TextWhip
+              as="h3"
+              text={step.title}
+              class="hk-display mt-6 text-2xl text-foreground"
+            />
+            <TextWhip
+              as="p"
+              text={step.body}
+              class="mt-2.5 max-w-xs leading-relaxed text-muted-foreground"
+              speed="fast"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

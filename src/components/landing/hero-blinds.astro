@@ -1,0 +1,86 @@
+---
+// Transition « Horizontal Blinds » du hero vers la section suivante.
+// Portage de la scroll-animation SVG-mask (animmaster #9) SANS GSAP : les lamelles
+// horizontales s'ouvrent depuis leur centre au fur et à mesure que le hero sort du
+// viewport, révélant le fond clair du reste du site. 0 dépendance (Lenis déjà en
+// place via locomotive-scroll), gated par prefers-reduced-motion.
+---
+
+<svg
+  data-hero-blinds
+  class="pointer-events-none absolute inset-0 z-30 h-full w-full"
+  viewBox="0 0 100 100"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+>
+</svg>
+
+<script>
+  const BLIND_COUNT = 24;
+  const STAGGER_SPAN = 0.45; // part de la progression consommée par la cascade
+  const END_RATIO = 0.8; // hero « effacé » quand il est sorti à 80 % du viewport
+  const SVG_NS = "http://www.w3.org/2000/svg";
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const svg = document.querySelector<SVGSVGElement>("[data-hero-blinds]");
+  const hero = svg?.closest("section") ?? null;
+
+  if (!reduced && svg && hero) {
+    const bands: SVGRectElement[] = [];
+    const bandHeight = 100 / BLIND_COUNT;
+    const halfMax = bandHeight / 2;
+
+    for (let i = 0; i < BLIND_COUNT; i++) {
+      const rect = document.createElementNS(SVG_NS, "rect");
+      const centerY = (i + 0.5) * bandHeight;
+
+      rect.setAttribute("x", "0");
+      rect.setAttribute("width", "100");
+      rect.setAttribute("y", String(centerY));
+      rect.setAttribute("height", "0");
+      // Blanc « en dur » : le hero est en .dark, var(--background) y résoudrait le
+      // token sombre — on veut la couleur claire du reste du site (oklch(1 0 0)).
+      rect.setAttribute("fill", "oklch(1 0 0)");
+      rect.setAttribute("shape-rendering", "crispEdges");
+      svg.appendChild(rect);
+      bands.push(rect);
+    }
+
+    const easeOut = (x: number): number => 1 - Math.pow(1 - x, 3);
+
+    const render = (): void => {
+      const box = hero.getBoundingClientRect();
+      const progress = Math.min(
+        Math.max(-box.top / (box.height * END_RATIO), 0),
+        1
+      );
+
+      for (let i = 0; i < BLIND_COUNT; i++) {
+        const start = (i / (BLIND_COUNT - 1)) * STAGGER_SPAN;
+        const local = Math.min(
+          Math.max((progress - start) / (1 - STAGGER_SPAN), 0),
+          1
+        );
+        const eased = easeOut(local);
+        const centerY = (i + 0.5) * bandHeight;
+
+        bands[i].setAttribute("y", String(centerY - halfMax * eased));
+        bands[i].setAttribute("height", String(bandHeight * eased));
+      }
+    };
+
+    let ticking = false;
+    const onScroll = (): void => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        render();
+        ticking = false;
+      });
+    };
+
+    render();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+  }
+</script>

@@ -1,0 +1,13 @@
+---
+import Landing from "@/components/landing/landing.astro";
+import BaseLayout from "@/layouts/base-layout.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="hikyy — The AI voice agent that answers for your restaurant"
+  description="hikyy answers every call to your restaurant, takes bookings and hands off to your team when needed. Zero missed calls, day and night."
+>
+  <Landing />
+</BaseLayout>

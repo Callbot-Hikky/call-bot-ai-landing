@@ -1,0 +1,35 @@
+---
+import { LanguageSelect } from "@/components/landing/language-select.tsx";
+import { languages, defaultLang, type Lang } from "@/i18n/ui";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const current = getLangFromUrl(Astro.url);
+const t = useTranslations(current);
+
+// Strip the locale prefix to get the bare path, then rebuild per locale.
+const segments = Astro.url.pathname.split("/").filter(Boolean);
+const bare =
+  segments[0] && segments[0] in languages
+    ? "/" + segments.slice(1).join("/")
+    : Astro.url.pathname;
+
+function hrefFor(lang: Lang): string {
+  const path = bare === "" ? "/" : bare;
+
+  return lang === defaultLang ? path : `/${lang}${path === "/" ? "" : path}`;
+}
+
+// Codes affichés en majuscules (FR / EN) dans le select.
+const options = (Object.keys(languages) as Lang[]).map((code) => ({
+  value: code,
+  label: code.toUpperCase(),
+  href: hrefFor(code)
+}));
+---
+
+<LanguageSelect
+  client:idle
+  options={options}
+  current={current}
+  ariaLabel={t("nav.langAria")}
+/>

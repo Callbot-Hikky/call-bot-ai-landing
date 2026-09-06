@@ -1,0 +1,110 @@
+---
+import Icon from "@/components/landing/icon.astro";
+import SectionBlinds from "@/components/landing/section-blinds.astro";
+import TextWhip from "@/components/landing/text-whip.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const rows = [
+  { name: "Camille Durand", seats: "4", time: "20 h 30", status: "confirmed" },
+  { name: "Yanis Bensaïd", seats: "2", time: "21 h 30", status: "pending" },
+  { name: "Léa Moreau", seats: "6", time: "19 h 45", status: "confirmed" }
+] as const;
+
+const points = [t("dash.point1"), t("dash.point2"), t("dash.point3")];
+---
+
+<section class="relative mx-auto max-w-6xl px-5 py-24 md:py-32">
+  <SectionBlinds fill="oklch(1 0 0)" />
+  <div class="grid items-center gap-14 lg:grid-cols-2">
+    <div>
+      <TextWhip
+        as="h2"
+        text={t("dash.title")}
+        class="hk-display text-[clamp(2rem,4.6vw,3.2rem)] text-foreground"
+      />
+      <TextWhip
+        as="p"
+        text={t("dash.body")}
+        class="mt-5 max-w-lg text-lg leading-relaxed text-muted-foreground"
+        speed="fast"
+      />
+      <ul class="mt-8 space-y-3">
+        {
+          points.map((p) => (
+            <li class="flex items-start gap-3 text-foreground/90">
+              <span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-secondary text-foreground">
+                <Icon name="check" size={14} />
+              </span>
+              {p}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="hk-reveal" style="--hk-reveal-delay:120ms">
+      <div class="relative">
+        <div class="hk-glow absolute -inset-6 -z-10 opacity-40"></div>
+        <div
+          class="hk-glass rounded-[26px] p-5"
+          style="box-shadow:0 30px 80px -40px rgba(0,0,0,.18)"
+        >
+          <div class="mb-4 flex items-center justify-between">
+            <div>
+              <p class="hk-display text-lg text-foreground">{t("dash.cardTitle")}</p>
+              <p class="text-xs text-muted-foreground">{t("dash.cardSub")}</p>
+            </div>
+            <span
+              class="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground"
+            >
+              <span class="size-1.5 rounded-full bg-foreground"></span>
+              {t("dash.live")}
+            </span>
+          </div>
+
+          <div class="space-y-2">
+            {
+              rows.map((row) => (
+                <div class="flex items-center justify-between rounded-2xl border border-border bg-background/40 px-4 py-3">
+                  <div class="min-w-0">
+                    <p class="truncate text-sm font-medium text-foreground">
+                      {row.name}
+                    </p>
+                    <p class="text-xs text-muted-foreground">
+                      {row.seats} · {row.time}
+                    </p>
+                  </div>
+                  <span
+                    class:list={[
+                      "shrink-0 rounded-full px-2.5 py-1 text-xs font-medium",
+                      row.status === "confirmed"
+                        ? "bg-secondary text-secondary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    ]}
+                  >
+                    {row.status === "confirmed" ? t("dash.confirmed") : t("dash.pending")}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+
+          <div
+            class="mt-3 flex items-center gap-3 rounded-2xl border border-coral/25 bg-coral/[0.08] px-4 py-3"
+          >
+            <span class="grid size-9 place-items-center rounded-xl bg-coral/15 text-coral">
+              <Icon name="phone-call" size={18} />
+            </span>
+            <div class="leading-tight">
+              <p class="text-sm font-medium text-foreground">{t("dash.callback")}</p>
+              <p class="text-xs text-muted-foreground">{t("dash.callbackMeta")}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,162 @@
+---
+// Spectre audio en « mesh gradient » : des barres verticales colorées
+// (cyan → bleu → violet) qui ondulent comme un égaliseur, fusionnées par un
+// flou → rendu mesh fluide et vivant. Plus hautes sur les côtés, basses au
+// centre (texte dégagé). Canvas, pause hors-écran, figé si reduced-motion.
+---
+
+<canvas
+  id="hk-mesh"
+  class="pointer-events-none absolute inset-0 -z-20 size-full"
+  style="filter:blur(42px)"
+  aria-hidden="true"></canvas>
+
+<script>
+  const canvas = document.getElementById("hk-mesh") as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext("2d") ?? null;
+
+  if (canvas && ctx) {
+    const BARS = 44;
+    const seeds = Array.from(
+      { length: BARS },
+      (_, i) => ((Math.sin(i * 43.21) * 1000) % 1 + 1) % 1
+    );
+
+    let w = 0;
+    let h = 0;
+    let dpr = 1;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // « Trou noir » : le pointeur repousse le spectre. On suit la souris en
+    // coordonnées locales (le canvas est pointer-events-none) et on lisse.
+    let mxT = -9999; // cible (position réelle du pointeur)
+    let myT = -9999;
+    let presT = 0; // présence cible (1 dans la hero, 0 sinon)
+    let mx = -9999; // valeurs lissées utilisées au rendu
+    let my = -9999;
+    let pres = 0;
+
+    const onPointerMove = (e: PointerEvent): void => {
+      const r = canvas.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const inside = x >= 0 && x <= r.width && y >= 0 && y <= r.height;
+      mxT = x;
+      myT = y;
+      presT = inside ? 1 : 0;
+    };
+    const onPointerLeave = (): void => {
+      presT = 0;
+    };
+
+    const resize = (): void => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    // Amplitude par barre : sinus superposés → ondulation nette et fluide.
+    const freq = (i: number, t: number): number => {
+      const a = 0.5 + 0.5 * Math.sin(t * 1.7 + i * 0.45);
+      const b = 0.5 + 0.5 * Math.sin(t * 1.05 - i * 0.3 + 2);
+      const c = 0.5 + 0.5 * Math.sin(t * 2.4 + i * 0.16 + seeds[i] * 6);
+      return Math.pow(a * 0.45 + b * 0.35 + c * 0.2, 1.25);
+    };
+
+    const draw = (time: number): void => {
+      const t = time * 0.001;
+      const barW = w / BARS;
+
+      // Lissage du pointeur → le trou noir suit la souris avec de l'inertie.
+      mx += (mxT - mx) * 0.2;
+      my += (myT - my) * 0.2;
+      pres += (presT - pres) * 0.09;
+      // Rayon d'influence du trou (px), relatif à la taille du canvas.
+      const holeR = Math.max(150, Math.min(w, h) * 0.26);
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = "source-over";
+
+      for (let i = 0; i < BARS; i++) {
+        const p = i / (BARS - 1);
+        // Pondération : haut sur les bords, bas au centre (dégage le texte).
+        const edge = 0.32 + Math.abs(p - 0.5) * 2 * 0.68;
+        const amp = freq(i, t);
+        let bh = (0.1 + amp * 0.62) * edge * h;
+        let x = i * barW + barW / 2;
+
+        // Répulsion « trou noir » : distance 2D du pointeur au segment coloré
+        // [h-bh, h] de la colonne. Proche → la barre s'affaisse et s'écarte,
+        // laissant un vide sombre là où passe la souris.
+        const barTop = h - bh;
+        const clampedY = my < barTop ? barTop : my > h ? h : my;
+        const dist = Math.hypot(x - mx, my - clampedY);
+        const g = Math.exp(-((dist / holeR) ** 2)) * pres;
+        bh *= 1 - g * 0.9;
+        x += Math.sign(x - mx || 1) * g * barW * 1.6;
+        // Nuances chaudes violet / pourpre / bleu, mélangées organiquement
+        // (position + temps) → un dégradé de teintes vivant, pas linéaire.
+        // Ordre du feu : rouge-orange dominant → jaune seulement en pointe.
+        const baseHue =
+          11 + Math.sin(p * 2 + t * 0.3) * 7 + Math.sin(t * 0.5 + i * 0.15) * 5;
+
+        const grad = ctx.createLinearGradient(0, h, 0, h - bh);
+        grad.addColorStop(0, `hsla(${baseHue}, 95%, 54%, 0.95)`); // rouge-orange
+        grad.addColorStop(0.5, `hsla(${baseHue + 10}, 92%, 55%, 0.8)`); // orange
+        grad.addColorStop(0.82, `hsla(${baseHue + 26}, 95%, 60%, 0.32)`); // orange → jaune
+        grad.addColorStop(0.95, `hsla(${baseHue + 42}, 97%, 63%, 0.1)`); // jaune (pointe)
+        grad.addColorStop(1, `hsla(${baseHue + 48}, 97%, 64%, 0)`);
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(x - barW * 1.2, h - bh, barW * 2.4, bh);
+      }
+
+      ctx.globalCompositeOperation = "source-over";
+    };
+
+    let raf = 0;
+    let running = false;
+
+    const loop = (time: number): void => {
+      draw(time);
+      raf = requestAnimationFrame(loop);
+    };
+    const start = (): void => {
+      if (running) return;
+      running = true;
+      raf = requestAnimationFrame(loop);
+    };
+    const stop = (): void => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    if (reduced) {
+      draw(1500);
+    } else {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("blur", onPointerLeave);
+      document.addEventListener("pointerleave", onPointerLeave);
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              start();
+            } else {
+              stop();
+            }
+          }
+        },
+        { threshold: 0 }
+      );
+      io.observe(canvas);
+    }
+  }
+</script>
