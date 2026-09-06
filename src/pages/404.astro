@@ -1,0 +1,21 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import BaseLayout from "@/layouts/base-layout.astro";
+
+export const prerender = true;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t("notFound.title")} noindex>
+  <section
+    class="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 px-5 text-center"
+  >
+    <p class="hk-gradient-text hk-display text-7xl font-semibold">404</p>
+    <h1 class="hk-display text-3xl text-foreground">{t("notFound.title")}</h1>
+    <p class="text-muted-foreground">{t("notFound.subtitle")}</p>
+    <a href="/" class={buttonVariants()}>{t("notFound.home")}</a>
+  </section>
+</BaseLayout>

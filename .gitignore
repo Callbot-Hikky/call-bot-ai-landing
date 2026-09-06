@@ -1,0 +1,33 @@
+# build output
+dist/
+.vercel/
+.output/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# environment
+.env
+.env.production
+.env*.local
+
+# logs
+*.log
+npm-debug.log*
+
+# lighthouse reports (lab runs)
+lighthouse-*.report.html
+*.report.html
+
+# macOS
+.DS_Store
+
+# editor
+.idea/
+*.swp
+
+# claude code (local)
+.claude/settings.local.json

@@ -1,0 +1,118 @@
+---
+import { Font } from "astro:assets";
+
+import Seo from "@/components/seo.astro";
+import { getLangFromUrl } from "@/i18n/utils";
+import { getAppUrl } from "@/lib/app-url";
+import "locomotive-scroll/locomotive-scroll.css";
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const { title, description, image, noindex } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+
+// App SaaS (frontend Angular) : cible de la redirection auto quand une session
+// hikyy est active (cookie `hk_session` posé sur .hikyy.fr par l'app au login).
+const APP_URL = getAppUrl();
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#ffffff" />
+    {/* Auth : si une session hikyy existe (cookie sur .hikyy.fr), on renvoie
+        directement vers l'app — avant le premier paint, donc zéro flash.
+        `?stay=1` (mémorisé) laisse un user connecté consulter la landing. */}
+    <script is:inline define:vars={{ appUrl: APP_URL }}>
+      (function () {
+        try {
+          var params = new URLSearchParams(location.search);
+          if (params.has("stay")) sessionStorage.setItem("hk-stay", "1");
+          if (sessionStorage.getItem("hk-stay") === "1") return;
+          var loggedIn = document.cookie
+            .split("; ")
+            .some(function (c) {
+              return c.indexOf("hk_session=") === 0;
+            });
+          if (loggedIn) location.replace(appUrl);
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <Font cssVariable="--font-instrument" preload />
+    <Seo
+      title={title}
+      description={description}
+      image={image}
+      noindex={noindex}
+    />
+  </head>
+  <body class="min-h-screen bg-background font-sans text-foreground antialiased">
+    <div class="hk-noise" aria-hidden="true"></div>
+    <slot />
+
+    <script>
+      // Reveal au scroll : `.hk-reveal` (fondu) et `.hk-whip` (whip mot par mot).
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              const el = entry.target as HTMLElement;
+              el.classList.add(
+                el.classList.contains("hk-whip") ? "hk-whip--in" : "hk-reveal--in"
+              );
+              io.unobserve(el);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+
+      document
+        .querySelectorAll<HTMLElement>(".hk-reveal, .hk-whip")
+        .forEach((el) => io.observe(el));
+    </script>
+
+    <script>
+      // Smooth scroll (Locomotive v5 = Lenis). Désactivé si prefers-reduced-motion.
+      import LocomotiveScroll from "locomotive-scroll";
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduced) {
+        const loco = new LocomotiveScroll({
+          lenisOptions: {
+            lerp: 0.09,
+            smoothWheel: true,
+            wheelMultiplier: 1
+          }
+        });
+
+        // Ancres internes → défilement piloté par Locomotive.
+        document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+          a.addEventListener("click", (e) => {
+            const id = a.getAttribute("href");
+
+            if (!id || id === "#") return;
+
+            const target = document.querySelector(id);
+
+            if (target) {
+              e.preventDefault();
+              loco.scrollTo(target as HTMLElement);
+            }
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

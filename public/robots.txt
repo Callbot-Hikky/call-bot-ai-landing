@@ -1,0 +1,8 @@
+# ⚠️ Update the Sitemap domain to match your production site.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /auth
+
+Sitemap: https://example.com/sitemap-index.xml

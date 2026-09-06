@@ -1,0 +1,373 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * hikyy — design system
+ * Palette reprise de l'app SaaS (call-bot-ai-frontend) : shadcn « zinc »
+ * monochrome, clair par défaut. Typo Fraunces (display) + Instrument Sans.
+ * Les accents sont neutralisés en zinc → cohérence totale avec le produit.
+ * ------------------------------------------------------------------ */
+
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.705 0.015 286.067);
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.552 0.016 285.938);
+}
+
+@theme inline {
+  --font-sans: var(--font-instrument), system-ui, sans-serif;
+  --font-display: var(--font-instrument), system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Accents neutralisés en zinc (l'app SaaS est monochrome). */
+  --color-amber: var(--foreground);
+  --color-coral: var(--muted-foreground);
+  --color-ember: var(--muted-foreground);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-float: hk-float 6s ease-in-out infinite;
+  --animate-marquee: hk-marquee 32s linear infinite;
+  --animate-wave: hk-wave 1.1s ease-in-out infinite;
+  --animate-drift: hk-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes hk-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes hk-marquee {
+  to { transform: translateX(-50%); }
+}
+@keyframes hk-wave {
+  0%, 100% { transform: scaleY(0.28); }
+  50% { transform: scaleY(1); }
+}
+@keyframes hk-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(4%, -3%, 0) scale(1.12); }
+}
+@keyframes hk-ping {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes hk-rise {
+  from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--background); }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--muted-foreground) 40%, var(--background));
+    border-radius: 999px;
+    border: 3px solid var(--background);
+  }
+}
+
+@layer components {
+  .hk-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  /* Accent de titre : dégradé zinc subtil (foreground -> muted). */
+  .hk-gradient-text {
+    background-image: linear-gradient(108deg, var(--foreground), var(--muted-foreground));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Overlay global : dégradé léger + grain (noise). Fixe, plein écran,
+     non-interactif. Le grain est un feTurbulence SVG inline (data URI).
+     Theme-aware via mix-blend-mode + opacités distinctes clair/sombre. */
+  .hk-noise {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  /* Couche dégradé : très subtile, part du haut (foreground) vers transparent. */
+  .hk-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        120% 80% at 50% -10%,
+        color-mix(in oklab, var(--foreground) 5%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--foreground) 3%, transparent),
+        transparent 40%
+      );
+  }
+  /* Couche grain : tuile SVG feTurbulence, blend soft-light. */
+  .hk-noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+    mix-blend-mode: soft-light;
+    opacity: 0.5;
+  }
+  .dark .hk-noise::after {
+    opacity: 0.65;
+  }
+
+  /* Halo très discret (profondeur), neutre. */
+  .hk-glow {
+    background: radial-gradient(
+      circle at center,
+      color-mix(in oklab, var(--foreground) 6%, transparent),
+      transparent 68%
+    );
+    filter: blur(30px);
+  }
+
+  /* Surface vitrée, theme-aware. */
+  .hk-glass {
+    background: color-mix(in oklab, var(--card) 86%, transparent);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+
+  .hk-fade-x {
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* CTA primaire = bouton primary shadcn (zinc). */
+  .hk-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--primary-foreground);
+    background-color: var(--primary);
+    box-shadow: 0 8px 24px -12px color-mix(in oklab, var(--foreground) 45%, transparent);
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s ease,
+      opacity 0.3s ease;
+  }
+  .hk-cta:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+    box-shadow: 0 14px 34px -12px color-mix(in oklab, var(--foreground) 55%, transparent);
+  }
+
+  .hk-cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+  .hk-cta-ghost:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+    background-color: var(--accent);
+  }
+
+  /* Reveal au scroll (piloté par un IntersectionObserver global). */
+  .hk-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--hk-reveal-delay, 0ms);
+  }
+  .hk-reveal--in {
+    opacity: 1;
+    transform: none;
+  }
+
+}
+
+/* « Whip in up » mot par mot — hors @layer pour éviter tout conflit de cascade.
+   L'IntersectionObserver global ajoute .hk-whip--in → l'animation se joue. */
+@keyframes hk-whip-up {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.hk-whip-word {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  vertical-align: bottom;
+}
+.hk-whip-inner {
+  display: inline-block;
+  transform: translateY(115%);
+  will-change: transform;
+}
+.hk-whip--in .hk-whip-inner {
+  animation: hk-whip-up var(--hk-whip-dur, 0.7s) cubic-bezier(0.5, -0.12, 0.2, 1.05)
+    both;
+  animation-delay: calc(
+    var(--hk-whip-delay, 0s) + var(--i) * var(--hk-whip-stagger, 0.05s)
+  );
+}
+/* Variante « fast » : paragraphes → animation plus rapide et stagger resserré. */
+.hk-whip--fast {
+  --hk-whip-dur: 0.52s;
+  --hk-whip-stagger: 0.032s;
+}
+/* Dégradé sur un TextWhip : le clip doit viser les mots (spans enfants),
+   pas l'élément racine, sinon le texte devient transparent/invisible. */
+.hk-whip-gradient .hk-whip-inner {
+  background-image: linear-gradient(
+    108deg,
+    var(--foreground),
+    var(--muted-foreground)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hk-whip-inner {
+    transform: none;
+  }
+  .hk-whip--in .hk-whip-inner {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hk-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Sections « slides » : chaque section prend toute la hauteur, contenu
+ * centré verticalement. Pas de scroll-snap dur (transitions trop sèches
+ * avec Lenis) : le smooth scroll Lenis assure des transitions fluides.
+ * `min-height` (pas `height`) → aucun contenu rogné si ça dépasse.
+ * ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+  main > section {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
