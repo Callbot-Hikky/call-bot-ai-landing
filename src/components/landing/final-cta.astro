@@ -3,9 +3,12 @@ import Icon from "@/components/landing/icon.astro";
 import SectionBlinds from "@/components/landing/section-blinds.astro";
 import TextWhip from "@/components/landing/text-whip.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getAppUrl } from "@/lib/app-url";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const APP_URL = getAppUrl();
 
 const bars = Array.from({ length: 36 }, (_, i) => i);
 ---
@@ -55,7 +58,7 @@ const bars = Array.from({ length: 36 }, (_, i) => i);
       />
 
       <div class="relative mt-9 flex flex-wrap items-center justify-center gap-3">
-        <a href="mailto:hello@hikyy.fr" class="hk-cta">
+        <a href={`${APP_URL}/register`} class="hk-cta">
           {t("cta.primary")}
           <Icon name="arrow-right" size={16} />
         </a>

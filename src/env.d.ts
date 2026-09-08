@@ -2,7 +2,7 @@
 /// <reference types="astro/client" />
 
 interface ImportMetaEnv {
-  /** URL de l'app SaaS (frontend Angular). Défaut : https://app.hikyy.fr */
+  /** URL de l'app SaaS (frontend Angular). Défaut : https://app.alloquence.fr */
   readonly PUBLIC_APP_URL?: string;
 }
 
