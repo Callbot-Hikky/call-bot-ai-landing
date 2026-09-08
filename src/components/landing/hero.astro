@@ -5,9 +5,12 @@ import Icon from "@/components/landing/icon.astro";
 import MeshGradient from "@/components/landing/mesh-gradient.astro";
 import TextWhip from "@/components/landing/text-whip.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getAppUrl } from "@/lib/app-url";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const APP_URL = getAppUrl();
 ---
 
 <section
@@ -46,7 +49,7 @@ const t = useTranslations(lang);
       class="hero-anim mt-9 flex flex-wrap items-center justify-center gap-3"
       style="--d:.26s"
     >
-      <a href="#demo" class="hk-cta">
+      <a href={`${APP_URL}/register`} class="hk-cta">
         {t("hero.ctaPrimary")}
         <Icon name="arrow-right" size={16} />
       </a>

@@ -7,7 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   // ⚠️ Set this to your production domain (used for canonical, hreflang, sitemap).
-  site: "https://hikyy.fr",
+  site: "https://alloquence.fr",
   // Fully static marketing site (no server runtime) — deploys anywhere.
   output: "static",
   integrations: [

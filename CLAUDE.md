@@ -1,6 +1,6 @@
-# hikyy — Landing (Astro)
+# Alloquence — Landing (Astro)
 
-Landing marketing du produit **hikyy** (agent vocal IA qui décroche pour les restaurants — voir le monorepo `call-bot-ai/`). Un repo = un site.
+Landing marketing du produit **Alloquence** (agent vocal IA qui décroche pour les restaurants — voir le monorepo `call-bot-ai/`). Un repo = un site.
 
 Stack : **Astro 5 (static) + React islands + Tailwind v4 + shadcn (Base UI) + i18n FR/EN**, fonts self-host, runtime Bun. **Pas de Supabase** (retiré) : site 100 % statique, CTAs en `mailto:` / `tel:`.
 

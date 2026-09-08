@@ -18,7 +18,7 @@ const { title, description, image, noindex } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 
 // App SaaS (frontend Angular) : cible de la redirection auto quand une session
-// hikyy est active (cookie `hk_session` posé sur .hikyy.fr par l'app au login).
+// Alloquence est active (cookie `hk_session` posé sur .alloquence.fr par l'app au login).
 const APP_URL = getAppUrl();
 ---
 
@@ -29,7 +29,7 @@ const APP_URL = getAppUrl();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#ffffff" />
-    {/* Auth : si une session hikyy existe (cookie sur .hikyy.fr), on renvoie
+    {/* Auth : si une session Alloquence existe (cookie sur .alloquence.fr), on renvoie
         directement vers l'app — avant le premier paint, donc zéro flash.
         `?stay=1` (mémorisé) laisse un user connecté consulter la landing. */}
     <script is:inline define:vars={{ appUrl: APP_URL }}>
@@ -41,7 +41,7 @@ const APP_URL = getAppUrl();
           var loggedIn = document.cookie
             .split("; ")
             .some(function (c) {
-              return c.indexOf("hk_session=") === 0;
+              return c === "hk_session=1";
             });
           if (loggedIn) location.replace(appUrl);
         } catch (e) {}

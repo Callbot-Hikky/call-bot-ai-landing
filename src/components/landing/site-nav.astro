@@ -27,7 +27,7 @@ const links = [
       class="flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-300"
     >
       <a href="#top" class="hk-display text-2xl font-semibold tracking-tight text-foreground">
-        hikyy
+        Alloquence
       </a>
 
       <nav class="hidden items-center gap-8 md:flex" aria-label="Navigation">
@@ -45,16 +45,7 @@ const links = [
 
       <div class="hidden items-center gap-4 md:flex">
         <LanguageSwitcher />
-        <a
-          href={`${APP_URL}/login`}
-          data-login-link
-          data-app-url={APP_URL}
-          data-logged-label={t("nav.dashboard")}
-          class="text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          {t("nav.login")}
-        </a>
-        <a href="#demo" class="hk-cta px-5 py-2.5 text-sm">{t("nav.demo")}</a>
+        <a href={`${APP_URL}/register`} class="hk-cta px-5 py-2.5 text-sm">{t("nav.try")}</a>
       </div>
 
       <button
@@ -83,20 +74,12 @@ const links = [
           </a>
         ))
       }
-      <a
-        href={`${APP_URL}/login`}
-        data-nav-close
-        data-login-link
-        data-app-url={APP_URL}
-        data-logged-label={t("nav.dashboard")}
-        class="rounded-xl px-3 py-2.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
-      >
-        {t("nav.login")}
-      </a>
       <div class="flex items-center justify-between px-3 py-2">
         <LanguageSwitcher />
       </div>
-      <a href="#demo" data-nav-close class="hk-cta mt-1 w-full">{t("nav.demo")}</a>
+      <a href={`${APP_URL}/register`} data-nav-close class="hk-cta mt-1 w-full">
+        {t("nav.try")}
+      </a>
     </div>
   </div>
 </header>
@@ -136,20 +119,4 @@ const links = [
       toggle?.setAttribute("aria-expanded", "false");
     });
   });
-
-  // Session hikyy active mais l'utilisateur reste sur la landing (?stay=1) :
-  // "Se connecter" devient "Mon espace" et pointe vers l'app.
-  const loggedIn = document.cookie
-    .split("; ")
-    .some((c) => c.startsWith("hk_session="));
-
-  if (loggedIn) {
-    document
-      .querySelectorAll<HTMLAnchorElement>("[data-login-link]")
-      .forEach((link) => {
-        link.href = link.dataset.appUrl ?? link.href;
-
-        if (link.dataset.loggedLabel) link.textContent = link.dataset.loggedLabel;
-      });
-  }
 </script>
