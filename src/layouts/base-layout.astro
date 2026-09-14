@@ -83,36 +83,15 @@ const APP_URL = getAppUrl();
     </script>
 
     <script>
-      // Smooth scroll (Locomotive v5 = Lenis). Désactivé si prefers-reduced-motion.
-      import LocomotiveScroll from "locomotive-scroll";
+      // Scroll lissé + GSAP/ScrollTrigger, chargés APRÈS le premier paint.
+      // L'import est dynamique et différé à l'idle : GSAP (~40 Ko gzip) ne doit
+      // jamais entrer dans le chemin critique, c'est ce qui tient le LCP.
+      const idle =
+        window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1));
 
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (!reduced) {
-        const loco = new LocomotiveScroll({
-          lenisOptions: {
-            lerp: 0.09,
-            smoothWheel: true,
-            wheelMultiplier: 1
-          }
-        });
-
-        // Ancres internes → défilement piloté par Locomotive.
-        document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
-          a.addEventListener("click", (e) => {
-            const id = a.getAttribute("href");
-
-            if (!id || id === "#") return;
-
-            const target = document.querySelector(id);
-
-            if (target) {
-              e.preventDefault();
-              loco.scrollTo(target as HTMLElement);
-            }
-          });
-        });
-      }
+      idle(() => {
+        void import("@/lib/scroll").then(({ initScroll }) => initScroll());
+      });
     </script>
   </body>
 </html>

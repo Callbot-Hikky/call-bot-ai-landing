@@ -1,7 +1,6 @@
 ---
 import HeroBlinds from "@/components/landing/hero-blinds.astro";
 import HeroDots from "@/components/landing/hero-dots.astro";
-import Icon from "@/components/landing/icon.astro";
 import MeshGradient from "@/components/landing/mesh-gradient.astro";
 import TextWhip from "@/components/landing/text-whip.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -35,7 +34,15 @@ const APP_URL = getAppUrl();
   <div class="relative mx-auto max-w-4xl">
     <h1 class="hk-display text-balance text-[clamp(2.1rem,5.4vw,4rem)] text-foreground">
       <TextWhip as="span" text={t("hero.titleLine1")} />{" "}
-      <TextWhip as="span" text={t("hero.titleAccent")} class="italic" delay={0.35} />
+      {/* Plus d'`italic` : l'italique d'Instrument Sans a été retirée du build,
+          le navigateur synthétisait un faux oblique. Et plus de couleur non
+          plus — le texte reste monochrome, la chaleur vient du fond. */}
+      <TextWhip
+        as="span"
+        text={t("hero.titleAccent")}
+        class="hk-whip-gradient"
+        delay={0.35}
+      />
     </h1>
 
     <TextWhip
@@ -51,10 +58,8 @@ const APP_URL = getAppUrl();
     >
       <a href={`${APP_URL}/register`} class="hk-cta">
         {t("hero.ctaPrimary")}
-        <Icon name="arrow-right" size={16} />
       </a>
       <a href="#fonctionnement" class="hk-cta-ghost">
-        <Icon name="play" size={16} />
         {t("hero.ctaSecondary")}
       </a>
     </div>
@@ -66,9 +71,8 @@ const APP_URL = getAppUrl();
     style="--d:.5s"
     aria-hidden="true"
   >
-    <span class="block size-6 animate-bounce">
-      <Icon name="arrow-right" size={22} class="rotate-90" />
-    </span>
+    {/* Indice de scroll sans icône : un filet qui descend en boucle. */}
+    <span class="hk-scroll-cue block h-10 w-px bg-current opacity-40"></span>
   </div>
 
   {/* Transition « Horizontal Blinds » vers la section suivante */}
@@ -81,6 +85,25 @@ const APP_URL = getAppUrl();
       opacity: 0;
       animation: hk-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       animation-delay: var(--d, 0s);
+    }
+
+    .hk-scroll-cue {
+      transform-origin: top;
+      animation: hk-cue 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    }
+  }
+
+  @keyframes hk-cue {
+    0% {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.4;
+    }
+    100% {
+      transform: scaleY(1);
+      opacity: 0;
     }
   }
 </style>

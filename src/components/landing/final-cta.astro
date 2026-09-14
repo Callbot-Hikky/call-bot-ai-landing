@@ -1,5 +1,4 @@
 ---
-import Icon from "@/components/landing/icon.astro";
 import SectionBlinds from "@/components/landing/section-blinds.astro";
 import TextWhip from "@/components/landing/text-whip.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -13,9 +12,15 @@ const APP_URL = getAppUrl();
 const bars = Array.from({ length: 36 }, (_, i) => i);
 ---
 
-<section id="demo" class="relative mx-auto max-w-6xl px-5 pb-24 md:pb-32">
+{/* Borne sombre symétrique de la hero : la page se lit sombre → clair → sombre.
+    Les lamelles de la FAQ révèlent déjà ce #08080c en sortie de section. */}
+<section
+  id="demo"
+  class="dark relative isolate px-5 py-24 md:py-32"
+  style="background:#08080c"
+>
   <SectionBlinds fill="color-mix(in oklab, oklch(0.967 0.001 286.375) 60%, oklch(1 0 0))" />
-  <div class="hk-reveal">
+  <div class="hk-reveal mx-auto max-w-6xl">
     <div
       class="relative overflow-hidden rounded-[36px] border border-border bg-muted/60 px-6 py-16 text-center md:py-24"
     >
@@ -60,11 +65,6 @@ const bars = Array.from({ length: 36 }, (_, i) => i);
       <div class="relative mt-9 flex flex-wrap items-center justify-center gap-3">
         <a href={`${APP_URL}/register`} class="hk-cta">
           {t("cta.primary")}
-          <Icon name="arrow-right" size={16} />
-        </a>
-        <a href="tel:+33000000000" class="hk-cta-ghost">
-          <Icon name="phone-call" size={16} class="text-amber" />
-          {t("cta.secondary")}
         </a>
       </div>
     </div>

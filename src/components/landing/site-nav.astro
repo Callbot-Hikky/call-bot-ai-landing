@@ -1,5 +1,4 @@
 ---
-import Icon from "@/components/landing/icon.astro";
 import LanguageSwitcher from "@/components/language-switcher.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import { getAppUrl } from "@/lib/app-url";
@@ -48,14 +47,16 @@ const links = [
         <a href={`${APP_URL}/register`} class="hk-cta px-5 py-2.5 text-sm">{t("nav.try")}</a>
       </div>
 
+      {/* Le burger est remplacé par le mot lui-même : zéro icône, et
+          l'affordance reste explicite (le pictogramme n'était de toute
+          façon lisible que par convention). */}
       <button
         id="site-nav-toggle"
         type="button"
-        class="grid size-10 place-items-center rounded-xl border border-border text-foreground md:hidden"
-        aria-label={t("nav.menu")}
+        class="hk-display rounded-xl border border-border px-3 py-2 text-xs tracking-[0.2em] text-foreground uppercase md:hidden"
         aria-expanded="false"
       >
-        <Icon name="menu" size={20} />
+        {t("nav.menu")}
       </button>
     </div>
 

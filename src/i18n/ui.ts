@@ -21,140 +21,119 @@ export const ui = {
     "nav.langAria": "Langue",
 
     // Hero
-    "hero.badge": "Agent vocal IA · pour la restauration",
-    "hero.titleLine1": "Votre téléphone ne sonnera plus",
-    "hero.titleAccent": "dans le vide.",
+    "hero.titleLine1": "Le cahier de réservation",
+    "hero.titleAccent": "qui tient la salle.",
     "hero.subtitle":
-      "Alloquence décroche chaque appel de votre restaurant, prend les réservations au téléphone et passe la main à votre équipe quand il le faut. Jour et nuit, sans jamais mettre personne en attente.",
+      "Alloquence réunit vos réservations, votre plan de salle et vos horaires au même endroit. Toute l'équipe voit le même service, en direct, sur tous vos établissements.",
     "hero.ctaPrimary": "Essayer Alloquence",
-    "hero.ctaSecondary": "Écouter un appel",
-    "hero.trust1": "Sans engagement",
-    "hero.trust2": "Installé en 24 h",
-    "hero.trust3": "Numéro conservé",
-
-    // Console d'appel
-    "console.restaurant": "Le Petit Jardin",
-    "console.status": "Appel entrant · en ligne",
-    "console.caller": "Client",
-    "console.line1": "Bonsoir, vous auriez une table pour quatre ce soir vers 20 h 30 ?",
-    "console.line2": "Bonsoir ! Oui, il me reste de la place à 20 h 30 pour quatre. C'est à quel nom ?",
-    "console.line3": "Camille Durand.",
-    "console.line4": "Parfait Camille, table de 4 à 20 h 30, c'est confirmé. Je vous envoie un SMS.",
-    "console.confirmed": "Réservation confirmée",
-    "console.sms": "SMS envoyé",
-    "console.cardTitle": "+1 réservation",
-    "console.cardMeta": "Camille · 4 couverts · 20 h 30",
-
-    // Marquee
-    "marquee.label": "Ils ne ratent plus un couvert",
+    "hero.ctaSecondary": "Voir le tableau de bord",
 
     // Problème
-    "problem.eyebrow": "Le vrai coût d'un téléphone qui sonne",
-    "problem.title": "Chaque sonnerie ignorée est un",
-    "problem.titleAccent": "couvert perdu.",
-    "problem.stat1": "1 appel sur 3",
-    "problem.stat1Body": "reste sans réponse pendant le coup de feu, quand la salle est pleine.",
-    "problem.stat2": "68 %",
-    "problem.stat2Body": "des clients ne rappellent pas : ils réservent simplement ailleurs.",
-    "problem.stat3": "2 h / jour",
-    "problem.stat3Body": "passées par votre équipe au téléphone plutôt qu'en salle.",
+    "problem.title": "Un service se joue à quelques",
+    "problem.titleAccent": "couverts près.",
+    "problem.stat1": "Le cahier papier",
+    "problem.stat1Body":
+      "vit derrière le comptoir. Personne ne sait ce qu'il contient sans se déplacer.",
+    "problem.stat2": "Les tables",
+    "problem.stat2Body":
+      "se combinent de tête, et la grande tablée du vendredi passe à côté d'une place libre.",
+    "problem.stat3": "Les no-shows",
+    "problem.stat3Body":
+      "se comptent après coup, quand la table est restée vide toute la soirée.",
 
     // Fonctionnalités
-    "features.eyebrow": "Ce que fait Alloquence",
-    "features.title": "Un maître d'hôtel au bout du fil, disponible en permanence.",
-    "features.f1Title": "Décrochage automatique",
-    "features.f1Body": "Chaque appel trouve une voix. Alloquence répond dès la première sonnerie, même en plein coup de feu.",
-    "features.f2Title": "Prise de réservation",
-    "features.f2Body": "Nom, couverts, horaire, allergies : Alloquence note tout et l'écrit dans votre cahier de réservation.",
-    "features.f3Title": "Passerelle vers un humain",
-    "features.f3Body": "Demande sensible ou client VIP ? Alloquence transfère l'appel à votre équipe, contexte déjà résumé.",
-    "features.f4Title": "Filet de sécurité",
-    "features.f4Body": "Personne ne décroche ? Le client est rappelé automatiquement. Aucune demande ne tombe dans le vide.",
-    "features.f5Title": "Routage intelligent",
-    "features.f5Body": "Heures de rush, plages de fermeture, débordement : Alloquence suit vos règles et bascule au bon moment.",
-    "features.f6Title": "100 % en français",
-    "features.f6Body": "Une voix naturelle qui comprend l'accent, les hésitations et le langage parlé de vos clients.",
+    "features.title": "Tout le service, au même endroit.",
+    "features.f1Title": "Cahier en direct",
+    "features.f1Body":
+      "Chaque réservation apparaît à l'instant où elle est prise, sur tous les postes. Plus de double saisie, plus de rature.",
+    "features.f2Title": "Plan de salle",
+    "features.f2Body":
+      "Dessinez votre salle, placez vos tables, et laissez Alloquence combiner celles qu'il faut pour une grande tablée.",
+    "features.f3Title": "Créneaux alternatifs",
+    "features.f3Body":
+      "Complet à 20 h 30 ? Alloquence propose les horaires les plus proches encore libres, au lieu de refuser le client.",
+    "features.f4Title": "Vos horaires, vos règles",
+    "features.f4Body":
+      "Services du midi et du soir, jours de fermeture, taille maximale des groupes : vos contraintes sont appliquées automatiquement.",
+    "features.f5Title": "Plusieurs établissements",
+    "features.f5Body":
+      "Un seul compte pour tous vos restaurants, avec des équipes et des données cloisonnées les unes des autres.",
+    "features.f6Title": "Vos clients, reconnus",
+    "features.f6Body":
+      "Chaque client est retrouvé à son numéro, avec l'historique de ses réservations et les notes de votre équipe.",
 
     // Comment ça marche
-    "how.eyebrow": "Comment ça marche",
     "how.title": "Trois temps. Aucun changement d'habitude.",
-    "how.s1Title": "Le client appelle",
-    "how.s1Body": "Il compose votre numéro habituel. Rien ne change pour lui, personne ne le met en attente.",
-    "how.s2Title": "Alloquence comprend et agit",
-    "how.s2Body": "L'agent vocal écoute, répond, réserve la table ou transfère à l'équipe — en temps réel.",
-    "how.s3Title": "Vous suivez tout",
-    "how.s3Body": "Réservations, rappels et transcriptions arrivent en direct dans votre tableau de bord.",
+    "how.s1Title": "Vous prenez la réservation",
+    "how.s1Body":
+      "Au téléphone ou au comptoir, votre équipe la saisit en quelques secondes.",
+    "how.s2Title": "Alloquence place la tablée",
+    "how.s2Body":
+      "Disponibilités, combinaison de tables, créneaux de repli : le placement est calculé pour vous.",
+    "how.s3Title": "Le service se déroule",
+    "how.s3Body":
+      "Toute la maison voit le même cahier, en direct, du comptoir à la direction.",
 
     // Dashboard
-    "dash.eyebrow": "Votre tableau de bord",
-    "dash.title": "Tout ce qui s'est dit, au même endroit.",
-    "dash.body": "Pendant qu'Alloquence répond, vous gardez la main. Chaque appel se transforme en information exploitable, sans une seule note manuscrite.",
-    "dash.point1": "Réservations écrites en direct dans votre cahier",
-    "dash.point2": "Transcription et résumé de chaque appel",
-    "dash.point3": "Rappels à passer, priorisés automatiquement",
+    "dash.title": "Votre service, en un coup d'œil.",
+    "dash.body":
+      "Le cahier, le plan de salle et les encaissements réunis. Ce que voit la salle est exactement ce que voit la direction.",
+    "dash.point1": "Réservations du service, mises à jour en direct",
+    "dash.point2": "Plan de salle et tables combinées",
+    "dash.point3": "Suivi des encaissements et des reversements",
     "dash.cardTitle": "Réservations",
     "dash.cardSub": "Aujourd'hui · service du soir",
     "dash.live": "En direct",
     "dash.confirmed": "Confirmé",
     "dash.pending": "En attente",
-    "dash.callback": "Rappel à passer",
-    "dash.callbackMeta": "+33 6 12 34 56 78 · appel manqué à 19 h 02",
-
-    // Métriques
-    "metrics.m1": "0",
-    "metrics.m1Label": "appel manqué",
-    "metrics.m2": "24/7",
-    "metrics.m2Label": "standard ouvert",
-    "metrics.m3": "~12 s",
-    "metrics.m3Label": "pour confirmer une résa",
-    "metrics.m4": "3×",
-    "metrics.m4Label": "moins de charge pour l'équipe",
-
-    // Témoignage
-    "testimonial.quote": "Avant Alloquence, on ratait une trentaine d'appels par service le vendredi soir. Aujourd'hui la salle est pleine et plus personne ne court après le téléphone.",
-    "testimonial.author": "Yanis B.",
-    "testimonial.role": "Gérant · Bistrot du Marché",
+    "dash.callback": "Grande tablée",
+    "dash.callbackMeta": "Camille Durand · 6 couverts · tables 4 + 5",
 
     // Tarifs
-    "pricing.eyebrow": "Tarifs",
-    "pricing.title": "Un prix fixe. Zéro appel manqué.",
-    "pricing.subtitle": "Moins cher qu'un extra le week-end, disponible tous les jours de l'année.",
-    "pricing.popular": "Populaire",
-    "pricing.note": "Tarifs indicatifs · Essai 14 jours · Sans carte bancaire",
+    "pricing.title": "Un prix fixe, sans surprise.",
+    "pricing.subtitle":
+      "Moins cher qu'un extra le week-end, disponible tous les jours de l'année.",
+    "pricing.note":
+      "99 € par mois. Si vous activez les réservations payantes : 5 % + 0,50 € par encaissement, jamais sur les pénalités no-show.",
     "pricing.p1Name": "Alloquence",
     "pricing.p1Price": "99€",
     "pricing.p1Cadence": "/ mois",
-    "pricing.p1Tagline": "Tout compris. Zéro appel manqué.",
+    "pricing.p1Tagline": "Un seul abonnement, tout le produit.",
     "pricing.p1CtaSubscribe": "Souscrire",
-    "pricing.p1Perk1": "Décrochage automatique 24/7",
-    "pricing.p1Perk2": "Prise de réservation & rappel du client",
-    "pricing.p1Perk3": "Transfert intelligent vers l'équipe",
-    "pricing.p1Perk4": "Routage des heures de rush",
-    "pricing.p1Perk5": "Tableau de bord, transcriptions & support",
+    "pricing.p1Perk1": "Cahier de réservation en direct",
+    "pricing.p1Perk2": "Plan de salle et combinaison de tables",
+    "pricing.p1Perk3": "Horaires, services et jours de fermeture",
+    "pricing.p1Perk4": "Plusieurs établissements sur un même compte",
+    "pricing.p1Perk5": "Support inclus",
 
     // FAQ
-    "faq.eyebrow": "Questions",
     "faq.title": "Ce que les restaurateurs nous demandent.",
-    "faq.q1": "Est-ce que je garde mon numéro actuel ?",
-    "faq.a1": "Oui. Alloquence se branche sur votre ligne existante : vos clients composent exactement le même numéro qu'aujourd'hui.",
-    "faq.q2": "On dirait un robot au téléphone ?",
-    "faq.a2": "Non. La voix est naturelle et conversationnelle. La plupart des clients ne se rendent pas compte qu'ils parlent à une IA.",
-    "faq.q3": "Et si Alloquence ne comprend pas une demande ?",
-    "faq.a3": "Il transfère l'appel à votre équipe ou déclenche un rappel automatique. Aucune demande n'est jamais perdue.",
-    "faq.q4": "Combien de temps pour l'installation ?",
-    "faq.a4": "En général 24 à 48 h. On configure ensemble vos règles, vos plages horaires et votre cahier de réservation.",
-    "faq.q5": "Alloquence fonctionne avec mon logiciel de réservation ?",
-    "faq.a5": "Alloquence s'intègre aux principaux outils du marché et peut écrire directement dans votre agenda. Dites-nous lequel vous utilisez.",
+    "faq.q1": "Faut-il installer quelque chose ?",
+    "faq.a1":
+      "Non. Alloquence s'ouvre dans un navigateur, aussi bien sur l'ordinateur du comptoir que sur un téléphone.",
+    "faq.q2": "Je gère plusieurs restaurants, c'est possible ?",
+    "faq.a2":
+      "Oui. Un seul compte, plusieurs établissements, avec des équipes et des données séparées.",
+    "faq.q3": "Comment sont gérées les grandes tablées ?",
+    "faq.a3":
+      "Alloquence combine les tables disponibles et respecte la taille maximale de groupe que vous avez définie.",
+    "faq.q4": "Puis-je demander des frais de réservation ?",
+    "faq.a4":
+      "Le module de réservations payantes existe et se règle par établissement, via Stripe. Il est en cours de déploiement : parlez-nous-en avant de l'activer.",
+    "faq.q5": "Mes données m'appartiennent-elles ?",
+    "faq.a5":
+      "Oui. Vos réservations et vos clients restent les vôtres, et chaque établissement est cloisonné des autres.",
 
     // CTA finale
-    "cta.title": "Ne perdez plus un seul",
-    "cta.titleAccent": "couvert.",
-    "cta.subtitle": "Voyez Alloquence décrocher, réserver et transférer en conditions réelles. Sans engagement, installé en 24 h.",
+    "cta.title": "Ouvrez votre cahier",
+    "cta.titleAccent": "ce soir.",
+    "cta.subtitle":
+      "Créez votre restaurant, dessinez votre salle et prenez votre première réservation en quelques minutes.",
     "cta.primary": "Essayer Alloquence",
-    "cta.secondary": "Parler à un humain",
 
     // Footer
-    "footer.tagline": "L'agent vocal IA qui décroche pour votre restaurant. Zéro appel manqué, jour et nuit.",
+    "footer.tagline":
+      "Le cahier de réservation des restaurants. Vos tables, vos services et vos équipes au même endroit.",
     "footer.colProduct": "Produit",
     "footer.colResources": "Ressources",
     "footer.colLegal": "Légal",
@@ -174,7 +153,8 @@ export const ui = {
 
     // 404
     "notFound.title": "Page introuvable",
-    "notFound.subtitle": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "notFound.subtitle":
+      "La page que vous cherchez n'existe pas ou a été déplacée.",
     "notFound.home": "Retour à l'accueil"
   },
   en: {
@@ -186,128 +166,111 @@ export const ui = {
     "nav.menu": "Menu",
     "nav.langAria": "Language",
 
-    "hero.badge": "AI voice agent · for restaurants",
-    "hero.titleLine1": "Your phone will never ring",
-    "hero.titleAccent": "into the void.",
+    "hero.titleLine1": "The booking book",
+    "hero.titleAccent": "that holds the room.",
     "hero.subtitle":
-      "Alloquence answers every call to your restaurant, takes bookings over the phone and hands off to your team when needed. Day and night, without ever putting anyone on hold.",
+      "Alloquence brings your bookings, your floor plan and your opening hours together. The whole team sees the same service, live, across all your venues.",
     "hero.ctaPrimary": "Try Alloquence",
-    "hero.ctaSecondary": "Listen to a call",
-    "hero.trust1": "No commitment",
-    "hero.trust2": "Live in 24 h",
-    "hero.trust3": "Keep your number",
+    "hero.ctaSecondary": "See the dashboard",
 
-    "console.restaurant": "Le Petit Jardin",
-    "console.status": "Incoming call · live",
-    "console.caller": "Caller",
-    "console.line1": "Hi, would you have a table for four tonight around 8:30?",
-    "console.line2": "Good evening! Yes, I have room at 8:30 for four. What name should I put it under?",
-    "console.line3": "Camille Durand.",
-    "console.line4": "Perfect Camille, table for 4 at 8:30, all confirmed. I'll send you a text.",
-    "console.confirmed": "Booking confirmed",
-    "console.sms": "Text sent",
-    "console.cardTitle": "+1 booking",
-    "console.cardMeta": "Camille · 4 guests · 8:30 PM",
+    "problem.title": "A service is won or lost by a few",
+    "problem.titleAccent": "covers.",
+    "problem.stat1": "The paper book",
+    "problem.stat1Body":
+      "lives behind the counter. No one knows what's in it without walking over.",
+    "problem.stat2": "Tables",
+    "problem.stat2Body":
+      "get combined from memory, and Friday's big party misses a seat that was free.",
+    "problem.stat3": "No-shows",
+    "problem.stat3Body":
+      "are counted afterwards, once the table has sat empty all evening.",
 
-    "marquee.label": "They never miss a cover anymore",
+    "features.title": "The whole service, in one place.",
+    "features.f1Title": "Live book",
+    "features.f1Body":
+      "Every booking appears the moment it's taken, on every screen. No double entry, no crossing out.",
+    "features.f2Title": "Floor plan",
+    "features.f2Body":
+      "Draw your room, place your tables, and let Alloquence combine the ones needed for a large party.",
+    "features.f3Title": "Alternative slots",
+    "features.f3Body":
+      "Full at 8:30? Alloquence offers the nearest times still open, instead of turning the guest away.",
+    "features.f4Title": "Your hours, your rules",
+    "features.f4Body":
+      "Lunch and dinner services, closing days, maximum party size: your constraints are applied automatically.",
+    "features.f5Title": "Several venues",
+    "features.f5Body":
+      "One account for all your restaurants, with teams and data kept separate from one another.",
+    "features.f6Title": "Guests you recognise",
+    "features.f6Body":
+      "Every guest is found by their number, with their booking history and your team's notes.",
 
-    "problem.eyebrow": "The real cost of a ringing phone",
-    "problem.title": "Every ignored ring is a",
-    "problem.titleAccent": "lost cover.",
-    "problem.stat1": "1 in 3 calls",
-    "problem.stat1Body": "goes unanswered during the rush, when the room is full.",
-    "problem.stat2": "68%",
-    "problem.stat2Body": "of customers don't call back — they simply book somewhere else.",
-    "problem.stat3": "2 h / day",
-    "problem.stat3Body": "spent by your team on the phone instead of on the floor.",
-
-    "features.eyebrow": "What Alloquence does",
-    "features.title": "A maître d' on the line, available around the clock.",
-    "features.f1Title": "Automatic pickup",
-    "features.f1Body": "Every call gets a voice. Alloquence answers on the first ring, even at peak service.",
-    "features.f2Title": "Takes bookings",
-    "features.f2Body": "Name, party size, time, allergies: Alloquence notes it all and writes it into your booking book.",
-    "features.f3Title": "Handoff to a human",
-    "features.f3Body": "Sensitive request or VIP guest? Alloquence transfers the call to your team, context already summarised.",
-    "features.f4Title": "Safety net",
-    "features.f4Body": "No one picks up? The caller is called back automatically. No request ever falls through.",
-    "features.f5Title": "Smart routing",
-    "features.f5Body": "Rush hours, closing windows, overflow: Alloquence follows your rules and switches at the right moment.",
-    "features.f6Title": "Fluent French",
-    "features.f6Body": "A natural voice that understands accents, hesitations and the way your customers actually speak.",
-
-    "how.eyebrow": "How it works",
     "how.title": "Three beats. No change of habit.",
-    "how.s1Title": "The customer calls",
-    "how.s1Body": "They dial your usual number. Nothing changes for them, no one gets put on hold.",
-    "how.s2Title": "Alloquence understands and acts",
-    "how.s2Body": "The voice agent listens, replies, books the table or transfers to the team — in real time.",
-    "how.s3Title": "You keep track",
-    "how.s3Body": "Bookings, callbacks and transcripts land live in your dashboard.",
+    "how.s1Title": "You take the booking",
+    "how.s1Body":
+      "On the phone or at the counter, your team enters it in seconds.",
+    "how.s2Title": "Alloquence seats the party",
+    "how.s2Body":
+      "Availability, table combining, fallback slots: the seating is worked out for you.",
+    "how.s3Title": "The service runs",
+    "how.s3Body":
+      "The whole house sees the same book, live, from the counter to the back office.",
 
-    "dash.eyebrow": "Your dashboard",
-    "dash.title": "Everything that was said, in one place.",
-    "dash.body": "While Alloquence answers, you stay in control. Every call turns into usable information, without a single handwritten note.",
-    "dash.point1": "Bookings written live into your book",
-    "dash.point2": "Transcript and summary of every call",
-    "dash.point3": "Callbacks to make, prioritised automatically",
+    "dash.title": "Your service, at a glance.",
+    "dash.body":
+      "The book, the floor plan and the payments in one place. What the floor sees is exactly what management sees.",
+    "dash.point1": "Bookings for the service, updated live",
+    "dash.point2": "Floor plan and combined tables",
+    "dash.point3": "Payments and payouts tracking",
     "dash.cardTitle": "Bookings",
     "dash.cardSub": "Today · evening service",
     "dash.live": "Live",
     "dash.confirmed": "Confirmed",
     "dash.pending": "Pending",
-    "dash.callback": "Callback to make",
-    "dash.callbackMeta": "+33 6 12 34 56 78 · missed call at 7:02 PM",
+    "dash.callback": "Large party",
+    "dash.callbackMeta": "Camille Durand · 6 guests · tables 4 + 5",
 
-    "metrics.m1": "0",
-    "metrics.m1Label": "missed call",
-    "metrics.m2": "24/7",
-    "metrics.m2Label": "line always open",
-    "metrics.m3": "~12 s",
-    "metrics.m3Label": "to confirm a booking",
-    "metrics.m4": "3×",
-    "metrics.m4Label": "less load on the team",
-
-    "testimonial.quote": "Before Alloquence, we missed about thirty calls a service on Friday nights. Now the room is full and no one chases the phone anymore.",
-    "testimonial.author": "Yanis B.",
-    "testimonial.role": "Owner · Bistrot du Marché",
-
-    "pricing.eyebrow": "Pricing",
-    "pricing.title": "A fixed price. Zero missed calls.",
-    "pricing.subtitle": "Cheaper than one weekend extra, available every day of the year.",
-    "pricing.popular": "Popular",
-    "pricing.note": "Indicative pricing · 14-day trial · No credit card",
+    "pricing.title": "A fixed price, no surprises.",
+    "pricing.subtitle":
+      "Cheaper than one weekend extra, available every day of the year.",
+    "pricing.note":
+      "€99 per month. If you enable paid bookings: 5% + €0.50 per payment collected, never on no-show penalties.",
     "pricing.p1Name": "Alloquence",
     "pricing.p1Price": "€99",
     "pricing.p1Cadence": "/ month",
-    "pricing.p1Tagline": "All-in. Zero missed calls.",
+    "pricing.p1Tagline": "One subscription, the whole product.",
     "pricing.p1CtaSubscribe": "Subscribe",
-    "pricing.p1Perk1": "Automatic pickup 24/7",
-    "pricing.p1Perk2": "Takes bookings & calls the customer back",
-    "pricing.p1Perk3": "Smart handoff to the team",
-    "pricing.p1Perk4": "Rush-hour routing",
-    "pricing.p1Perk5": "Dashboard, transcripts & support",
+    "pricing.p1Perk1": "Live booking book",
+    "pricing.p1Perk2": "Floor plan and table combining",
+    "pricing.p1Perk3": "Opening hours, services and closing days",
+    "pricing.p1Perk4": "Several venues on one account",
+    "pricing.p1Perk5": "Support included",
 
-    "faq.eyebrow": "Questions",
     "faq.title": "What restaurateurs ask us.",
-    "faq.q1": "Do I keep my current number?",
-    "faq.a1": "Yes. Alloquence plugs into your existing line: your customers dial exactly the same number as today.",
-    "faq.q2": "Does it sound like a robot on the phone?",
-    "faq.a2": "No. The voice is natural and conversational. Most customers don't realise they're talking to an AI.",
-    "faq.q3": "What if Alloquence doesn't understand a request?",
-    "faq.a3": "It transfers the call to your team or triggers an automatic callback. No request is ever lost.",
-    "faq.q4": "How long does setup take?",
-    "faq.a4": "Usually 24 to 48 h. We configure your rules, your time slots and your booking book together.",
-    "faq.q5": "Does Alloquence work with my booking software?",
-    "faq.a5": "Alloquence integrates with the main tools on the market and can write straight into your calendar. Tell us which one you use.",
+    "faq.q1": "Is there anything to install?",
+    "faq.a1":
+      "No. Alloquence opens in a browser, on the counter computer as well as on a phone.",
+    "faq.q2": "I run several restaurants — is that supported?",
+    "faq.a2":
+      "Yes. One account, several venues, with separate teams and data.",
+    "faq.q3": "How are large parties handled?",
+    "faq.a3":
+      "Alloquence combines the available tables and respects the maximum party size you set.",
+    "faq.q4": "Can I ask guests for a booking fee?",
+    "faq.a4":
+      "The paid bookings module exists and is configured per venue, through Stripe. It is still rolling out: talk to us before switching it on.",
+    "faq.q5": "Does my data belong to me?",
+    "faq.a5":
+      "Yes. Your bookings and your guests remain yours, and each venue is kept separate from the others.",
 
-    "cta.title": "Never lose a single",
-    "cta.titleAccent": "cover.",
-    "cta.subtitle": "See Alloquence answer, book and transfer in real conditions. No commitment, live in 24 h.",
+    "cta.title": "Open your book",
+    "cta.titleAccent": "tonight.",
+    "cta.subtitle":
+      "Create your restaurant, draw your room and take your first booking in a few minutes.",
     "cta.primary": "Try Alloquence",
-    "cta.secondary": "Talk to a human",
 
-    "footer.tagline": "The AI voice agent that answers for your restaurant. Zero missed calls, day and night.",
+    "footer.tagline":
+      "The booking book for restaurants. Your tables, your services and your teams in one place.",
     "footer.colProduct": "Product",
     "footer.colResources": "Resources",
     "footer.colLegal": "Legal",
@@ -326,7 +289,8 @@ export const ui = {
     "footer.madeWith": "Crafted with care for restaurants",
 
     "notFound.title": "Page not found",
-    "notFound.subtitle": "The page you're looking for doesn't exist or has moved.",
+    "notFound.subtitle":
+      "The page you're looking for doesn't exist or has moved.",
     "notFound.home": "Back to home"
   }
 } as const;

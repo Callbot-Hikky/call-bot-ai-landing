@@ -8,7 +8,8 @@
 // Static build: pages are prerendered to `dist/` and served with Bun's static
 // server. Lighthouse targets public marketing pages — that's where CWV matters.
 import { spawn } from "node:child_process";
-import { readFileSync, rmSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { brotliCompressSync } from "node:zlib";
 
 // Avoid 4321 (astro dev default) so we never audit a running dev server.
 const PORT = 4399;
@@ -26,6 +27,14 @@ const forms =
       ? ["desktop"]
       : ["mobile", "desktop"];
 
+// Without these headers the bench measures a site nobody ships: Lighthouse
+// computes FCP/LCP from real transfer sizes, so serving uncompressed inflates
+// the simulated timeline. nginx.conf and Vercel both compress and cache —
+// the bench must too, or it lies about the production page.
+// NOTE: .woff2 is deliberately absent. It is already compressed; re-encoding
+// makes it marginally larger.
+const COMPRESSIBLE = /\.(html|css|js|json|svg|xml|txt)$/;
+
 const server = Bun.serve({
   port: PORT,
   async fetch(req) {
@@ -40,7 +49,23 @@ const server = Bun.serve({
       const file = Bun.file(candidate);
 
       if (await file.exists()) {
-        return new Response(file);
+        const headers = { "content-type": file.type };
+
+        // Hashed assets: same policy as nginx.conf.
+        if (pathname.startsWith("/_astro/")) {
+          headers["cache-control"] = "public, max-age=31536000, immutable";
+        }
+
+        if (COMPRESSIBLE.test(candidate)) {
+          headers["content-encoding"] = "br";
+
+          return new Response(
+            brotliCompressSync(Buffer.from(await file.arrayBuffer())),
+            { headers }
+          );
+        }
+
+        return new Response(file, { headers });
       }
     }
 
@@ -78,11 +103,14 @@ function runLighthouse(url, form, jsonPath) {
 
 const pct = (s) => (s == null ? "—" : String(Math.round(s * 100)));
 const rows = [];
+const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "");
 
 try {
   for (const form of forms) {
     for (const path of PATHS) {
-      const base = `lighthouse-${form}-${slug(path)}`;
+      // Timestamped: runs used to overwrite each other, which made two
+      // measurements impossible to compare after the fact.
+      const base = `lighthouse-${form}-${slug(path)}-${stamp}`;
       const jsonPath = `${base}.report.json`;
 
       console.error(`\n▶ Lighthouse — ${form} — ${path}`);
@@ -106,7 +134,8 @@ try {
         si: a["speed-index"]?.displayValue ?? "—"
       });
 
-      rmSync(jsonPath, { force: true });
+      // The JSON is the exploitable source; the HTML is only a wrapper.
+      console.error(`  ${jsonPath}`);
     }
   }
 } finally {

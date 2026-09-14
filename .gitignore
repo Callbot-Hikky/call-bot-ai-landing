@@ -18,8 +18,9 @@ node_modules/
 *.log
 npm-debug.log*
 
-# lighthouse reports (lab runs)
+# lighthouse reports (lab runs) — the JSON is the exploitable source, both are local-only
 lighthouse-*.report.html
+lighthouse-*.report.json
 *.report.html
 
 # macOS
@@ -31,3 +32,6 @@ lighthouse-*.report.html
 
 # claude code (local)
 .claude/settings.local.json
+
+# Cache outil Impeccable
+.impeccable/
