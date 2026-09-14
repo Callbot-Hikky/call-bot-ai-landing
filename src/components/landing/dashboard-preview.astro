@@ -1,5 +1,4 @@
 ---
-import Icon from "@/components/landing/icon.astro";
 import SectionBlinds from "@/components/landing/section-blinds.astro";
 import TextWhip from "@/components/landing/text-whip.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -9,7 +8,7 @@ const t = useTranslations(lang);
 
 const rows = [
   { name: "Camille Durand", seats: "4", time: "20 h 30", status: "confirmed" },
-  { name: "Yanis Bensaïd", seats: "2", time: "21 h 30", status: "pending" },
+  { name: "Sofia Leconte", seats: "2", time: "21 h 30", status: "pending" },
   { name: "Léa Moreau", seats: "6", time: "19 h 45", status: "confirmed" }
 ] as const;
 
@@ -23,7 +22,7 @@ const points = [t("dash.point1"), t("dash.point2"), t("dash.point3")];
       <TextWhip
         as="h2"
         text={t("dash.title")}
-        class="hk-display text-[clamp(2rem,4.6vw,3.2rem)] text-foreground"
+        class="hk-display text-[clamp(2.1rem,5.4vw,3.6rem)] text-foreground"
       />
       <TextWhip
         as="p"
@@ -31,13 +30,15 @@ const points = [t("dash.point1"), t("dash.point2"), t("dash.point3")];
         class="mt-5 max-w-lg text-lg leading-relaxed text-muted-foreground"
         speed="fast"
       />
-      <ul class="mt-8 space-y-3">
+      {/* Filet corail plutôt qu'une coche dans une pastille : zéro icône. */}
+      <ul class="mt-8 space-y-4 border-l border-border pl-6">
         {
           points.map((p) => (
-            <li class="flex items-start gap-3 text-foreground/90">
-              <span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-secondary text-foreground">
-                <Icon name="check" size={14} />
-              </span>
+            <li class="relative text-foreground/90">
+              <span
+                class="hk-rule-flame absolute top-[0.7em] -left-6 h-px w-3"
+                aria-hidden="true"
+              />
               {p}
             </li>
           ))
@@ -92,12 +93,7 @@ const points = [t("dash.point1"), t("dash.point2"), t("dash.point3")];
             }
           </div>
 
-          <div
-            class="mt-3 flex items-center gap-3 rounded-2xl border border-coral/25 bg-coral/[0.08] px-4 py-3"
-          >
-            <span class="grid size-9 place-items-center rounded-xl bg-coral/15 text-coral">
-              <Icon name="phone-call" size={18} />
-            </span>
+          <div class="border-foreground/30 bg-muted/60 mt-3 border-l-2 px-4 py-3">
             <div class="leading-tight">
               <p class="text-sm font-medium text-foreground">{t("dash.callback")}</p>
               <p class="text-xs text-muted-foreground">{t("dash.callbackMeta")}</p>

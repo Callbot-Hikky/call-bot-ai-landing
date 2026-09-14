@@ -1,5 +1,4 @@
 ---
-import Icon from "@/components/landing/icon.astro";
 import SectionBlinds from "@/components/landing/section-blinds.astro";
 import TextWhip from "@/components/landing/text-whip.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -34,7 +33,7 @@ const plan = {
     <TextWhip
       as="h2"
       text={t("pricing.title")}
-      class="hk-display text-[clamp(2rem,4.6vw,3.4rem)] text-foreground"
+      class="hk-display text-[clamp(2.1rem,5.4vw,4rem)] text-foreground"
     />
     <TextWhip
       as="p"
@@ -66,12 +65,14 @@ const plan = {
           <span class="mb-1.5 text-muted-foreground">{plan.cadence}</span>
         </div>
 
-        <ul class="relative mt-7 space-y-3">
+        {/* Filets corail plutôt que des coches : zéro icône. */}
+        <ul class="relative mt-7 space-y-4 border-l border-border pl-6">
           {plan.perks.map((perk) => (
-            <li class="flex items-start gap-3 text-[0.95rem] text-foreground/90">
-              <span class="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-secondary text-foreground">
-                <Icon name="check" size={14} />
-              </span>
+            <li class="relative text-[0.95rem] text-foreground/90">
+              <span
+                class="hk-rule-flame absolute top-[0.7em] -left-6 h-px w-3"
+                aria-hidden="true"
+              />
               {perk}
             </li>
           ))}
@@ -79,7 +80,6 @@ const plan = {
 
         <a href={`${APP_URL}/offre`} class="hk-cta relative mt-8 w-full">
           {plan.ctaSubscribe}
-          <Icon name="arrow-right" size={16} />
         </a>
       </div>
     </div>

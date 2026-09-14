@@ -32,7 +32,8 @@ export default defineConfig({
         name: "Instrument Sans",
         cssVariable: "--font-instrument",
         weights: [400, 500, 600, 700],
-        styles: ["normal", "italic"],
+        // Italic dropped: the display family below now carries the italic accent.
+        styles: ["normal"],
         subsets: ["latin"],
         fallbacks: ["system-ui", "sans-serif"]
       }
