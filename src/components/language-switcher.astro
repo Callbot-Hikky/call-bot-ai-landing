@@ -1,5 +1,4 @@
 ---
-import { LanguageSelect } from "@/components/landing/language-select.tsx";
 import { languages, defaultLang, type Lang } from "@/i18n/ui";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
@@ -19,7 +18,7 @@ function hrefFor(lang: Lang): string {
   return lang === defaultLang ? path : `/${lang}${path === "/" ? "" : path}`;
 }
 
-// Codes affichés en majuscules (FR / EN) dans le select.
+// Codes affichés en majuscules (FR / EN).
 const options = (Object.keys(languages) as Lang[]).map((code) => ({
   value: code,
   label: code.toUpperCase(),
@@ -27,9 +26,31 @@ const options = (Object.keys(languages) as Lang[]).map((code) => ({
 }));
 ---
 
-<LanguageSelect
-  client:idle
-  options={options}
-  current={current}
-  ariaLabel={t("nav.langAria")}
-/>
+{/*
+  Deux liens, zéro JavaScript. Remplace un îlot React (~330 Ko bruts, hydraté
+  deux fois par page) qui ne faisait qu'une redirection : le navigateur sait
+  déjà suivre un lien. Bonus : fonctionne sans JS et se référence proprement
+  pour le SEO multilingue.
+*/}
+<nav aria-label={t("nav.langAria")} class="flex items-center gap-1 text-sm">
+  {
+    options.map((option, i) => (
+      <>
+        {i > 0 && <span class="text-border" aria-hidden="true">/</span>}
+        <a
+          href={option.href}
+          hreflang={option.value}
+          aria-current={option.value === current ? "true" : undefined}
+          class:list={[
+            "rounded px-1 py-0.5 transition-colors hover:text-foreground",
+            option.value === current
+              ? "text-foreground"
+              : "text-muted-foreground"
+          ]}
+        >
+          {option.label}
+        </a>
+      </>
+    ))
+  }
+</nav>

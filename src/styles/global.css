@@ -77,10 +77,11 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Accents neutralisés en zinc (l'app SaaS est monochrome). */
-  --color-amber: var(--foreground);
-  --color-coral: var(--muted-foreground);
-  --color-ember: var(--muted-foreground);
+  /* Accents « flamme » — repris des couleurs réelles du canvas de la hero
+     (mesh-gradient.astro : hue de base ~11°, du rouge-orange au jaune). */
+  --color-coral: hsl(11 95% 54%);
+  --color-amber: hsl(21 92% 55%);
+  --color-ember: hsl(37 95% 60%);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -149,20 +150,50 @@
 }
 
 @layer components {
+  /* Une seule famille : Instrument Sans. Le contraste titre/texte vient donc
+     uniquement de la graisse (700 vs 400), du tracking très resserré et des
+     écarts d'échelle. Le 700 est déjà dans le fichier variable téléchargé :
+     coût zéro octet. */
   .hk-display {
     font-family: var(--font-display);
-    font-optical-sizing: auto;
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
   }
 
-  /* Accent de titre : dégradé zinc subtil (foreground -> muted). */
+  /* Rappel de flamme sur un élément graphique (filet, bordure) — jamais sur
+     du texte. C'est le seul endroit où la chaleur réapparaît hors des fonds. */
+  .hk-rule-flame {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-coral),
+      var(--color-ember)
+    );
+  }
+
+  /* Dégradé flamme sur les mots de titre.
+     Sur fond CLAIR on s'arrête au rouge-orange profond : la pointe jaune de la
+     rampe tombe à ~1,3:1 de contraste, illisible et éliminatoire pour le score
+     d'accessibilité. La flamme complète est réservée aux sections sombres. */
   .hk-gradient-text {
-    background-image: linear-gradient(108deg, var(--foreground), var(--muted-foreground));
+    background-image: linear-gradient(
+      108deg,
+      hsl(11 95% 48%),
+      hsl(24 92% 46%)
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Sections sombres (hero, CTA finale) : rampe complète, jusqu'au jaune. */
+  .dark .hk-gradient-text {
+    background-image: linear-gradient(
+      108deg,
+      hsl(11 95% 54%),
+      hsl(37 95% 60%),
+      hsl(53 97% 63%)
+    );
   }
 
   /* Overlay global : dégradé léger + grain (noise). Fixe, plein écran,
@@ -205,11 +236,12 @@
     opacity: 0.65;
   }
 
-  /* Halo très discret (profondeur), neutre. */
+  /* Braise : halo chaud repris de la flamme de la hero. Seule variante
+     validée sur fond clair (alpha bas → pas de perte de contraste texte). */
   .hk-glow {
     background: radial-gradient(
       circle at center,
-      color-mix(in oklab, var(--foreground) 6%, transparent),
+      hsl(21 92% 55% / 0.10),
       transparent 68%
     );
     filter: blur(30px);
@@ -310,8 +342,11 @@
   transform: translateY(115%);
   will-change: transform;
 }
+/* ease-out-expo : départ franc, longue décélération. Remplace un easing à
+   dépassement dont le rebond était de toute façon rogné par l'overflow du
+   mot — on en payait la sensation datée sans jamais le voir. */
 .hk-whip--in .hk-whip-inner {
-  animation: hk-whip-up var(--hk-whip-dur, 0.7s) cubic-bezier(0.5, -0.12, 0.2, 1.05)
+  animation: hk-whip-up var(--hk-whip-dur, 0.7s) cubic-bezier(0.16, 1, 0.3, 1)
     both;
   animation-delay: calc(
     var(--hk-whip-delay, 0s) + var(--i) * var(--hk-whip-stagger, 0.05s)
@@ -322,17 +357,22 @@
   --hk-whip-dur: 0.52s;
   --hk-whip-stagger: 0.032s;
 }
-/* Dégradé sur un TextWhip : le clip doit viser les mots (spans enfants),
-   pas l'élément racine, sinon le texte devient transparent/invisible. */
+/* Dégradé flamme sur un TextWhip : le clip doit viser les mots (spans
+   enfants), pas l'élément racine, sinon le texte devient transparent. */
 .hk-whip-gradient .hk-whip-inner {
-  background-image: linear-gradient(
-    108deg,
-    var(--foreground),
-    var(--muted-foreground)
-  );
+  background-image: linear-gradient(108deg, hsl(11 95% 48%), hsl(24 92% 46%));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.dark .hk-whip-gradient .hk-whip-inner {
+  background-image: linear-gradient(
+    108deg,
+    hsl(11 95% 54%),
+    hsl(37 95% 60%),
+    hsl(53 97% 63%)
+  );
 }
 @media (prefers-reduced-motion: reduce) {
   .hk-whip-inner {

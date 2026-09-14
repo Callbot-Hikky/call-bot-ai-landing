@@ -1,5 +1,4 @@
 ---
-import Icon from "@/components/landing/icon.astro";
 import SectionBlinds from "@/components/landing/section-blinds.astro";
 import TextWhip from "@/components/landing/text-whip.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -8,71 +7,76 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const features = [
-  { icon: "phone-call", title: t("features.f1Title"), body: t("features.f1Body") },
-  { icon: "calendar-check", title: t("features.f2Title"), body: t("features.f2Body") },
-  { icon: "phone-forwarded", title: t("features.f3Title"), body: t("features.f3Body") },
-  { icon: "shield-check", title: t("features.f4Title"), body: t("features.f4Body") },
-  { icon: "waypoints", title: t("features.f5Title"), body: t("features.f5Body") },
-  { icon: "languages", title: t("features.f6Title"), body: t("features.f6Body") }
+  { title: t("features.f1Title"), body: t("features.f1Body") },
+  { title: t("features.f2Title"), body: t("features.f2Body") },
+  { title: t("features.f3Title"), body: t("features.f3Body") },
+  { title: t("features.f4Title"), body: t("features.f4Body") },
+  { title: t("features.f5Title"), body: t("features.f5Body") },
+  { title: t("features.f6Title"), body: t("features.f6Body") }
 ] as const;
 ---
 
+{/*
+  Mur typographique : plus de cartes à pictogramme, plus de numéros. Chaque
+  entrée est une ligne de grille séparée par un filet, titre en Instrument
+  Sans 700. Le survol ne fait qu'avancer le texte — aucun halo, aucun anneau.
+*/}
 <section
   id="fonctionnalites"
   class="relative mx-auto max-w-6xl px-5 py-24 md:py-32"
 >
   <SectionBlinds fill="color-mix(in oklab, oklch(0.967 0.001 286.375) 60%, oklch(1 0 0))" />
-  <div class="max-w-2xl">
-    <TextWhip
-      as="h2"
-      text={t("features.title")}
-      class="hk-display text-[clamp(2rem,4.6vw,3.4rem)] text-foreground"
-    />
-  </div>
 
-  <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <TextWhip
+    as="h2"
+    text={t("features.title")}
+    class="hk-display hk-whip-gradient max-w-3xl text-[clamp(2.4rem,7vw,5.5rem)]"
+  />
+
+  <div class="mt-16 border-t border-border md:mt-24">
     {
       features.map((feature, i) => (
-        <div class="hk-reveal" style={`--hk-reveal-delay:${(i % 3) * 80}ms`}>
-          <article class="hk-feature group relative h-full overflow-hidden rounded-3xl border border-border bg-card/40 p-7 transition-colors duration-300 hover:border-coral/30">
-            <div class="hk-feature-glow pointer-events-none absolute -right-16 -top-16 size-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500" />
-            <span class="relative grid size-12 place-items-center rounded-2xl text-amber ring-1 ring-inset ring-border">
-              <Icon name={feature.icon} size={24} strokeWidth={1.9} />
-            </span>
-            <TextWhip
-              as="h3"
-              text={feature.title}
-              class="hk-display relative mt-6 text-xl text-foreground"
-            />
-            <TextWhip
-              as="p"
-              text={feature.body}
-              class="relative mt-2.5 text-[0.95rem] leading-relaxed text-muted-foreground"
-              speed="fast"
-            />
-          </article>
-        </div>
+        <article
+          class="hk-feature hk-reveal grid gap-x-10 border-b border-border py-8 md:grid-cols-[minmax(0,20rem)_1fr] md:py-10"
+          style={`--hk-reveal-delay:${(i % 3) * 90}ms`}
+        >
+          <TextWhip
+            as="h3"
+            text={feature.title}
+            class="hk-display text-[clamp(1.5rem,3vw,2.2rem)] text-foreground"
+          />
+
+          <TextWhip
+            as="p"
+            text={feature.body}
+            class="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground md:mt-0 md:pt-1"
+            speed="fast"
+          />
+        </article>
       ))
     }
   </div>
 </section>
 
 <style>
-  .hk-feature span {
-    background-image: linear-gradient(
-      135deg,
-      color-mix(in oklab, var(--color-amber) 20%, transparent),
-      color-mix(in oklab, var(--color-coral) 20%, transparent)
-    );
+  /* Le seul feedback au survol : la ligne avance. Pas de halo, pas de carte. */
+  .hk-feature {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .hk-feature-glow {
-    background: radial-gradient(
-      circle,
-      color-mix(in oklab, var(--foreground) 10%, transparent),
-      transparent 70%
-    );
+
+  @media (hover: hover) {
+    .hk-feature:hover {
+      transform: translateX(0.75rem);
+    }
   }
-  .hk-feature:hover .hk-feature-glow {
-    opacity: 1;
+
+  @media (prefers-reduced-motion: reduce) {
+    .hk-feature {
+      transition: none;
+    }
+
+    .hk-feature:hover {
+      transform: none;
+    }
   }
 </style>
